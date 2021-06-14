@@ -1,8 +1,17 @@
 export class ContaCorrente {
+  
+  static quantidadeContas=0; 
   agencia;
   cliente;
+  pacote; 
 
   _saldo = 0;
+
+  constructor(agencia, cliente){
+    this.agencia = agencia; 
+    this.cliente = cliente; 
+    ContaCorrente.quantidadeContas++;
+  }
 
   sacar(valor) {
     if (this._saldo > valor) {
@@ -18,8 +27,8 @@ export class ContaCorrente {
     this._saldo = valor;
   }
 
-  getSaldo() {
-    return _saldo;
+  get saldo(){
+    return this._saldo; 
   }
 
   transferir(valor, conta) {
