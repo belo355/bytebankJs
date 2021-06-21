@@ -1,39 +1,18 @@
-export class ContaCorrente {
-  
-  static quantidadeContas=0; 
-  agencia;
-  cliente;
-  pacote; 
+import { Conta } from "./Conta.js";
+export class ContaCorrente extends Conta {
 
-  _saldo = 0;
-
-  constructor(agencia, cliente){
-    this.agencia = agencia; 
-    this.cliente = cliente; 
-    ContaCorrente.quantidadeContas++;
+  constructor(agencia, cliente, saldoInicial) {
+    super(agencia, cliente, saldoInicial);
   }
 
   sacar(valor) {
+    let taxa = 1.1; 
     if (this._saldo > valor) {
-      this._saldo -= valor;
+      this._saldo -= valor * taxa;
       return valor;
     } else {
       console.log("Saldo insuficiente para saque");
     }
-  }
-
-  depositar(valor) {
-    if (valor <= 0) return;
-    this._saldo = valor;
-  }
-
-  get saldo(){
-    return this._saldo; 
-  }
-
-  transferir(valor, conta) {
-    if (valor > this._saldo) return 
-
-    conta.depositar(this.sacar(valor));
+    // pacoteServico.contabilizar(); RESOLVER
   }
 }
