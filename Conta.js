@@ -2,30 +2,33 @@ import { PacoteServico } from "./PacoteServico.js";
 
 export class Conta {
   static quantidadeContas = 0;
-  pacoteServico; 
 
-  constructor(agencia, cliente, saldoInicial) {
+  constructor(agencia, cliente, saldoInicial, tipoPacote) {
     this.agencia = agencia;
     this.cliente = cliente;
     this._saldo = saldoInicial;
     this.quantidadeContas++;
-    this.pacoteServico = new PacoteServico(); 
+    this.pacoteServico = new PacoteServico(tipoPacote); //todo entender como resolver pcote de servico
   }
 
   sacar(valor) {
-    if (this._saldo > valor) {
-      this._saldo -= valor;
+    let taxa = 1;
+    return this._sacar(valor, taxa);
+  }
+
+  _sacar(valor, taxa) {
+    if (this._saldo > (valor * taxa)) {
+      this._saldo -= (valor * taxa);
       return valor;
     } else {
       console.log("Saldo insuficiente para saque");
+      return 0; 
     }
-    // pacoteServico.contabilizar(); RESOLVER
   }
 
   depositar(valor) {
     if (valor <= 0) return;
-    this._saldo = valor;
-    // pacoteServico.contabilizar(); RESOLVER
+    this._saldo += valor;
   }
 
   get saldo() {
@@ -35,6 +38,5 @@ export class Conta {
   transferir(valor, conta) {
     if (valor > this._saldo) return;
     conta.depositar(this.sacar(valor));
-    // pacoteServico.contabilizar(); RESOLVER
   }
 }
